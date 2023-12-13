@@ -1,0 +1,20 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+
+development:
+  <<: *default
+  database: library_management_system_concept_development
+
+test:
+  <<: *default
+  database: library_management_system_concept_test
+
+production:
+  <<: *default
+  database: library_management_system_concept_production
+  username: library_management_system_concept
+  password: <%= ENV["LIBRARY_MANAGEMENT_SYSTEM_CONCEPT_DATABASE_PASSWORD"] %>
