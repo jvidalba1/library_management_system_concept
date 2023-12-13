@@ -1,0 +1,5 @@
+<% if librarian_signed_in? %>
+    <h1>Dashboard for Librarian </h1>
+<% elsif member_signed_in? %>
+    <h1>Dashboard for Member </h1>
+<% end %>
