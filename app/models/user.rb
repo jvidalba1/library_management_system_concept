@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :type, inclusion: { in: ['Librarian', 'Member'], message: "%{value} is not a valid type" }
+
+  has_many :borrowings
 end
