@@ -1,14 +1,26 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Books</h1>
 
+<% if librarian_signed_in? %>
+  <%= link_to "New book", new_book_path %>  
+<% end %>
+
 <div id="books">
-  <% @books.each do |book| %>
-    <%= render book %>
-    <p>
-      <%= link_to "Show this book", book %>
-    </p>
-  <% end %>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>ISBN</th>
+        <th>Total copies</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <%= render book %>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 
-<%= link_to "New book", new_book_path %>
+

@@ -17,5 +17,10 @@ RSpec.describe Book, type: :model do
       book.isbn = ''
       expect(book).to be_invalid
     end
+
+    it 'is invalid with no total copies as numeric' do
+      book.total_copies = '34d'
+      expect(book).to be_invalid
+    end
   end
 end

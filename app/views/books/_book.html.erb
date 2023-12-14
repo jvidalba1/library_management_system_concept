@@ -1,12 +1,18 @@
-<div id="<%= dom_id book %>">
-  <p>
-    <strong>Title:</strong>
-    <%= book.title %>
-  </p>
-
-  <p>
-    <strong>Author:</strong>
-    <%= book.author %>
-  </p>
-
-</div>
+<tr id="<%= dom_id book %>">
+  <td><%= book.title %></td>
+  <td><%= book.author %></td>
+  <td><%= book.genre %></td>
+  <td><%= book.isbn %></td>
+  <td><%= book.total_copies %></td>
+  <% if librarian_signed_in? %>
+    <td>
+      <%= link_to "Edit this book", edit_book_path(book) %> |
+      <%= link_to "Destroy this book", book, data: { turbo_method: :delete } %>
+    </td>
+  <% end %>
+  <% if member_signed_in? %>
+    <td>
+      <%= link_to "Borrow this book", book %>
+    </td>
+  <% end %>
+</tr>

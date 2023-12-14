@@ -12,13 +12,28 @@
   <% end %>
 
   <div>
-    <%= form.label :title, style: "display: block" %>
+    <%= form.label :title, "Title *", style: "display: block" %>
     <%= form.text_field :title %>
   </div>
 
   <div>
     <%= form.label :author, style: "display: block" %>
     <%= form.text_field :author %>
+  </div>
+
+  <div>
+    <%= form.label :genre, style: "display: block" %>
+    <%= form.text_field :genre %>
+  </div>
+
+  <div>
+    <%= form.label :isbn, "ISBN *", style: "display: block" %>
+    <%= form.text_field :isbn %>
+  </div>
+
+  <div>
+    <%= form.label :total_copies, style: "display: block" %>
+    <%= form.text_field :total_copies %>
   </div>
 
   <div>
