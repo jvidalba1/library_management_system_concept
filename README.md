@@ -1,5 +1,11 @@
 # README
 
+## Images
+
+![IMG_4328](https://github.com/jvidalba1/library_management_system_concept/assets/968980/47e82200-a1f1-4798-8030-3e07cda3f9c6)
+![IMG_4327](https://github.com/jvidalba1/library_management_system_concept/assets/968980/6abba01a-43c5-4614-ab5d-138395365e7b)
+![IMG_4326](https://github.com/jvidalba1/library_management_system_concept/assets/968980/c1053241-2c6c-4d25-b398-c91c34ad6de1)
+
 ## Notes
 - App allows to select multiple books by borrowing record, like a cart
 - Please check seed file /db/seed.rb to get credentials for librarian and member users
