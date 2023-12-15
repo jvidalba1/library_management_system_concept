@@ -6,13 +6,14 @@
   <td><%= book.total_copies %></td>
   <% if librarian_signed_in? %>
     <td>
-      <%= link_to "Edit this book", edit_book_path(book) %> |
-      <%= link_to "Destroy this book", book, data: { turbo_method: :delete } %>
+      <%= link_to "Edit", edit_book_path(book) %> |
+      <%= link_to "Delete", book, data: { turbo_method: :delete } %> |
+      <%= link_to "See Borrowings", book_borrowings_path(book) %>
     </td>
   <% end %>
   <% if member_signed_in? %>
     <td>
-      <%= form_with(url: borrowing_add_path) do |f| %>
+      <%= form_with(url: add_borrowings_path) do |f| %>
         <%= f.hidden_field :id, value: book.id %>
         <%= f.submit "Add to borrowing cart" %>
       <% end %>

@@ -1,0 +1,32 @@
+<h1>Borrowing <%= @borrowing.id %></h1>
+<p>Status: <%= @borrowing.status %></p>
+<p>Returned at: <%= @borrowing.returned_at %></p>
+<p>Borrowed at: <%= @borrowing.borrowed_at %></p>
+<p>Due at: <%= @borrowing.due_at %></p>
+<p>User: <%= @borrowing.user.email %></p>
+<p><%= link_to "Return all books", return_borrowing_path(@borrowing), data: { turbo_method: :post }%></p>
+<h2>Books</h2>
+<div">
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>ISBN</th>
+            <th>Total copies</th>
+        </tr>
+        </thead>
+        <tbody>
+            <% @borrowing.books.each do |book| %>
+                <tr id="<%= dom_id book %>">
+                    <td><%= book.title %></td>
+                    <td><%= book.author %></td>
+                    <td><%= book.genre %></td>
+                    <td><%= book.isbn %></td>
+                    <td><%= book.total_copies %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,38 @@
+<h1>Book: <%= @book.title %></h1>
+<% if @borrowings.any? %>
+    <div id="borrowings">
+    <table>
+        <thead>
+        <tr>
+            <th>Status</th>
+            <th>Returned at</th>
+            <th>Borrowed at</th>
+            <th>Due at</th>
+            <th>User</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <% @borrowings.each do |borrowing| %>
+                <tr id="<%= dom_id borrowing %>">
+                    <td><%= borrowing.status %></td>
+                    <td><%= borrowing.returned_at %></td>
+                    <td><%= borrowing.borrowed_at %></td>
+                    <td><%= borrowing.due_at %></td>
+                    <td><%= borrowing.user.email %></td>
+                    <% if librarian_signed_in? && borrowing.borrowed? %>
+                        <td>
+                            <%= link_to "Return all books", "#" %>
+                        </td>
+                        <td>
+                            <%= link_to "See all books", borrowing_path(borrowing) %>
+                        </td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    </div>
+<% else %>
+<p>No borrowings</p>
+<% end %>

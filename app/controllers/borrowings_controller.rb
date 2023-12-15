@@ -1,4 +1,4 @@
-class BorrowingController < ApplicationController
+class BorrowingsController < ApplicationController
   before_action :authenticate_user!
   before_action :init_borrowing_cart
 
@@ -13,6 +13,21 @@ class BorrowingController < ApplicationController
 
   def show
     @render_borrowing = false
+    @borrowing = Borrowing.find_by(id: params[:id])
+  end
+
+  def return
+    @borrowing = Borrowing.find_by(id: params[:id])
+    @borrowing.returned_at = Time.zone.now
+    @borrowing.status = 2
+    @borrowing.save
+
+    redirect_to borrowing_url(@borrowing), notice: "Books successfully returned."
+  end
+
+  def index
+    @book = Book.find_by(id: params[:book_id])
+    @borrowings = @book.borrowings.includes(:user)
   end
 
   def add
@@ -26,7 +41,7 @@ class BorrowingController < ApplicationController
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace('borrowing',
-              partial: 'borrowing/borrowing',
+              partial: 'borrowings/borrowing',
               locals: { borrowing: @borrowing }
             ),
             turbo_stream.replace(@book)
@@ -46,7 +61,7 @@ class BorrowingController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace('borrowing',
-            partial: 'borrowing/borrowing',
+            partial: 'borrowings/borrowing',
             locals: { borrowing: @borrowing }
           ),
           turbo_stream.replace(@book)
@@ -65,12 +80,5 @@ class BorrowingController < ApplicationController
 
     flash.now[:notice] = "Books were succesfully borrowed."
     redirect_to books_url
-
-    # render turbo_stream: turbo_stream.replace("flash-messages", partial: "application/flash_message")
-    # respond_to do |format|
-    #   format.turbo_stream do
-    #     render turbo_stream: turbo_stream.replace('borrowing', partial: 'borrowing/borrowing', locals: { borrowing: @borrowing } )
-    #   end
-    # end
   end
 end

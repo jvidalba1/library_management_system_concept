@@ -5,4 +5,5 @@ class Book < ApplicationRecord
 
   validates_presence_of :title, :isbn
   validates :total_copies, numericality: { greater_than_or_equal_to: 2 }
+
 end

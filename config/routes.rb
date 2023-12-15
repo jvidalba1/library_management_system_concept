@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
-  get 'borrowing', to: 'borrowing#show'
-  post 'borrowing/add'
-  post 'borrowing/remove'
-  post 'borrowing/checkout'
-  resources :books
+  # get 'borrowing', to: 'borrowing#show'
+
+
+  resources :borrowings, only: [:show] do
+    post 'return', on: :member
+    collection do
+      post 'add'
+      post 'remove'
+      post 'checkout'
+    end
+  end
+
+  resources :books do
+    get 'borrowings', to: 'borrowings#index'
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
