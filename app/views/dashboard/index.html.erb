@@ -1,6 +1,83 @@
+<!-- TODO : Partials for each dashboard -->
 <% if librarian_signed_in? %>
     <h1>Dashboard for Librarian </h1>
-    <p>Total books: </p>
+    <p>Total books: <%= @books.count %></p>
+    <p>Total borrowed books: <%= @borrowed_books.count %></p>
+    <p></p>
+    <div>
+        <h3>Books due today</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>ISBN</th>
+                <th>Total copies</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @books_due_today.each do |book| %>
+                <tr id="<%= dom_id book %>">
+                    <td><%= book.title %></td>
+                    <td><%= book.author %></td>
+                    <td><%= book.genre %></td>
+                    <td><%= book.isbn %></td>
+                    <td><%= book.total_copies %></td>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h3>List users with overdue books</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Email</th>
+            </tr>
+            </thead>
+                <tbody>
+                    <% @users.each do |user| %>
+                        <tr>
+                            <td><%= user.email %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+        </table>
+    </div>
 <% elsif member_signed_in? %>
     <h1>Dashboard for Member </h1>
+    <div>
+        <% @member_borrowings.each do |borrowing| %>
+            <p>--------------------------------------------</p>
+            <p>Status: <%= borrowing.status %></p>
+            <p>Returned at: <%= borrowing.returned_at %></p>
+            <p>Borrowed at: <%= borrowing.borrowed_at %></p>
+            <p>Due at: <%= borrowing.due_at %></p>
+            <div>
+                <h3>Books:</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>ISBN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% borrowing.books.each do |book| %>
+                        <tr>
+                            <td><%= book.title %></td>
+                            <td><%= book.author %></td>
+                            <td><%= book.genre %></td>
+                            <td><%= book.isbn %></td>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                </table>
+            </div>
+        <% end %>
+    </div>
 <% end %>
