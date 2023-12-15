@@ -1,0 +1,30 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>ISBN</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+        <% @borrowing.borrowables.each do |borrowable| %>
+            <% book = borrowable.book %>
+            <tr id="<%= "borrowing-#{book.id}" %>">
+                <td><%= book.title %></td>
+                <td><%= book.author %></td>
+                <td><%= book.genre %></td>
+                <td><%= book.isbn %></td>
+                <td>
+                    <%= form_with(url: borrowing_remove_path) do |f| %>
+                        <%= f.hidden_field :id, value: borrowable.id %>
+                        <%= f.submit "Remove" %>
+                    <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+  </table>
+</div>

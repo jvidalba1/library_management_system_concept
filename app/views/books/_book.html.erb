@@ -12,7 +12,10 @@
   <% end %>
   <% if member_signed_in? %>
     <td>
-      <%= link_to "Borrow this book", book %>
+      <%= form_with(url: borrowing_add_path) do |f| %>
+        <%= f.hidden_field :id, value: book.id %>
+        <%= f.submit "Add to borrowing cart" %>
+      <% end %>
     </td>
   <% end %>
 </tr>

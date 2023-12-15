@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :borrowing do
-    status { Random.rand(0..2) }
+    status { Random.rand(0..3) }
     association user
     created_at { Date.today }
 

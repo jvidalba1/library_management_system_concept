@@ -1,3 +1,8 @@
+
+<% if member_signed_in? %>
+  <%= render partial: "borrowing/borrowing" if @render_borrowing %>
+<% end %>
+
 <h1>Books</h1>
 
 <% if librarian_signed_in? %>

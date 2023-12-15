@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "borrowing" do %>
+    <h1>Borrowing cart</h1>
+    <% if @borrowing.borrowables.count > 0 %>
+        <%= render "borrowing/borrowables" %>
+        <p>
+            Total: <%= @borrowing.borrowables.count %>
+            <%= link_to "Finish", borrowing_checkout_path, data: { turbo_method: :post } %>
+        </p>
+    <% else %>
+        <p>Your borrowing cart is empty</p>
+    <% end %>
+<% end %>

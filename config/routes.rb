@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'borrowing', to: 'borrowing#show'
+  post 'borrowing/add'
+  post 'borrowing/remove'
+  post 'borrowing/checkout'
   resources :books
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

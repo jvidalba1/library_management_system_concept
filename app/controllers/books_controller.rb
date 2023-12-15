@@ -1,5 +1,16 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :init_borrowing_cart
+
+  def init_borrowing_cart
+    @borrowing ||= current_user.borrowings.find_by(id: session[:borrowing_id])
+
+    if @borrowing.nil?
+      @borrowing = current_user.borrowings.create(status: 0)
+      session[:borrowing_id] = @borrowing.id
+    end
+  end
 
   # GET /books or /books.json
   def index
