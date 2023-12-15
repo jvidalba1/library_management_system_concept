@@ -9,6 +9,12 @@
   <%= link_to "New book", new_book_path %>  
 <% end %>
 
+<%= form_with url: books_path, method: :get do |f| %>
+  <%= f.label :search_value, "Search by title, author or genre" %>
+  <%= f.text_field :search_value, value: params[:search_value] %>
+  <%= f.button "Search" %>
+<% end %>
+</p>
 <div id="books">
   <table>
     <thead>
@@ -27,5 +33,3 @@
     </tbody>
   </table>
 </div>
-
-
