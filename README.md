@@ -1,6 +1,7 @@
 # README
 
 ## Notes
+- I chose to create 4 tables in the database, and 6 models in the Rails project, I used STI for users, librarians and members models. I chose to use a many-to-many relationship between Book and Borrowing with an intermediate model named Borrowable.
 - App allows to select multiple books by borrowing record, like a cart
 - Please check seed file /db/seed.rb to get credentials for librarian and member users
 
@@ -12,6 +13,7 @@
 - Add more logic in Models
 - Refactoring views using more partials
 - Styling in views
+- Restul API
 
 ## Getting started
 
