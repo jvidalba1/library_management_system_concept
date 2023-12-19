@@ -15,11 +15,7 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.available
-
-    if params[:search_value].present?
-      @books = @books.where('title ilike ? OR author ilike ? OR genre ilike ?', "%#{params[:search_value]}%", "%#{params[:search_value]}%", "%#{params[:search_value]}%")
-    end
+    @books = SearchBooks.new(Book.available).call(params[:search_value])
   end
 
   def show

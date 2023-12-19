@@ -7,11 +7,8 @@
 
 ## Pending tasks
 - Unit tests
-- Authorization under the hood, control actions by users librarian and member, I thought to use Pundit
-- Refactoring controllers using object queries or services
-- Add more logic in Models
 - Refactoring views using more partials
-- Styling in views
+- Styling views
 - Restul API
 
 ## Getting started
