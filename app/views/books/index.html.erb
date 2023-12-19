@@ -15,21 +15,21 @@
   <%= f.button "Search" %>
 <% end %>
 </p>
-<div id="books">
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Genre</th>
-        <th>ISBN</th>
-        <th>Total copies</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @books.each do |book| %>
-        <%= render book %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<%= turbo_frame_tag "oelo" do %>
+  <div id="books">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Genre</th>
+          <th>ISBN</th>
+          <th>Total copies</th>
+        </tr>
+      </thead>
+        <tbody>
+            <%= render partial: 'books', locals: { books: @books } %>
+        </tbody>
+    </table>
+  </div>
+<% end %>

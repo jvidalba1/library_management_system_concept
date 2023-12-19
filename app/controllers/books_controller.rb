@@ -15,10 +15,10 @@ class BooksController < ApplicationController
   # GET /books or /books.json
   def index
     if params[:search_value].present?
-      @books = Book.all
+      @books = Book.available
       @books = @books.where('title ilike ? OR author ilike ? OR genre ilike ?', "%#{params[:search_value]}%", "%#{params[:search_value]}%", "%#{params[:search_value]}%")
     else
-      @books = Book.all
+      @books = Book.available
     end
   end
 

@@ -32,10 +32,15 @@ class BorrowingsController < ApplicationController
 
   def add
     @book = Book.find_by(id: params[:id])
-    @borrowing.borrowables.create(book: @book)
+    @borrowables = @borrowing.borrowables
+    borrowable = @borrowables.where(book_id: @book.id).first_or_initialize
 
-    if @book.total_copies > 0
-      @book.decrement!(:total_copies, 1)
+
+    if borrowable.new_record?
+      @book.decrement_copies!
+      borrowable.save!
+
+      @books = Book.available
 
       respond_to do |format|
         format.turbo_stream do
@@ -44,7 +49,20 @@ class BorrowingsController < ApplicationController
               partial: 'borrowings/borrowing',
               locals: { borrowing: @borrowing }
             ),
-            turbo_stream.replace(@book)
+            turbo_stream.replace(@book),
+            turbo_stream.replace('oelo', partial: 'books/books', locals: { books: @books })
+          ] # ToDo: View add.turbo_stream.erb
+        end
+      end
+    else
+      @books = Book.available
+
+      respond_to do |format|
+        format.turbo_stream do
+          flash.now[:notice] = "Testing!!!!!!!!!"
+          render turbo_stream: [
+            turbo_stream.replace('oelo', partial: 'books/books', locals: { books: @books }),
+            turbo_stream.replace("flash", partial: "layouts/flash")
           ]
         end
       end
@@ -54,8 +72,9 @@ class BorrowingsController < ApplicationController
   def remove
     borrowable = Borrowable.find_by(id: params[:id])
     @book = borrowable.book
-    @book.increment!(:total_copies, 1)
+    @book.increment_copies!
     borrowable.destroy
+    @books = Book.available
 
     respond_to do |format|
       format.turbo_stream do
@@ -64,7 +83,8 @@ class BorrowingsController < ApplicationController
             partial: 'borrowings/borrowing',
             locals: { borrowing: @borrowing }
           ),
-          turbo_stream.replace(@book)
+          turbo_stream.replace(@book),
+          turbo_stream.replace('oelo', partial: 'books/books', locals: { books: @books })
         ]
       end
     end
