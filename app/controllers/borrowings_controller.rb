@@ -91,14 +91,11 @@ class BorrowingsController < ApplicationController
   end
 
   def checkout
-    @borrowing.borrowed_at = Time.zone.now
-    @borrowing.due_at = Time.zone.now + 2.weeks
-    @borrowing.status = 1
-    @borrowing.save!
-
+    @borrowing.set_due_date!
     session[:borrowing_id] = nil
 
-    flash.now[:notice] = "Books were succesfully borrowed."
-    redirect_to books_url
+    respond_to do |format|
+      format.html { redirect_to books_url, notice: "Books were successfully borrowed." }
+    end
   end
 end

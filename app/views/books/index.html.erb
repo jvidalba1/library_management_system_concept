@@ -16,20 +16,5 @@
 <% end %>
 </p>
 <%= turbo_frame_tag "oelo" do %>
-  <div id="books">
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Genre</th>
-          <th>ISBN</th>
-          <th>Total copies</th>
-        </tr>
-      </thead>
-        <tbody>
-            <%= render partial: 'books', locals: { books: @books } %>
-        </tbody>
-    </table>
-  </div>
+  <%= render partial: 'books', locals: { books: @books } %>
 <% end %>
