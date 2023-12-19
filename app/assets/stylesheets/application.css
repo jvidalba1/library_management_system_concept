@@ -14,7 +14,7 @@
  *= require_self
  */
 
- .flash {
+ /* .flash {
   position:fixed;
   top: 5rem;
   left: 50%;
@@ -37,4 +37,4 @@
     animation: appear-then-fade 4s both;
     border-radius: 999px;
   }
-}
+} */

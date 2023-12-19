@@ -7,4 +7,12 @@ class User < ApplicationRecord
   validates :type, inclusion: { in: ['Librarian', 'Member'], message: "%{value} is not a valid type" }
 
   has_many :borrowings
+
+  def is_librarian?
+    type == 'Librarian'
+  end
+
+  def is_member?
+    type == 'Member'
+  end
 end

@@ -3,21 +3,23 @@ class BorrowingsController < ApplicationController
   before_action :init_borrowing_cart
 
   def init_borrowing_cart
-    @borrowing ||= current_user.borrowings.find_by(id: session[:borrowing_id])
+    if current_user.is_member?
+        @borrowing ||= current_user.borrowings.find_by(id: session[:borrowing_id])
 
-    if @borrowing.nil?
-      @borrowing = current_user.borrowings.create(status: 0)
-      session[:borrowing_id] = @borrowing.id
+        if @borrowing.nil?
+        @borrowing = current_user.borrowings.create(status: 0)
+        session[:borrowing_id] = @borrowing.id
+      end
     end
   end
 
   def show
     @render_borrowing = false
-    @borrowing = Borrowing.find_by(id: params[:id])
+    @borrowing = authorize Borrowing.find_by(id: params[:id])
   end
 
   def return
-    @borrowing = Borrowing.find_by(id: params[:id])
+    @borrowing = authorize Borrowing.find_by(id: params[:id])
     @borrowing.returned_at = Time.zone.now
     @borrowing.status = 2
     @borrowing.save
@@ -27,14 +29,15 @@ class BorrowingsController < ApplicationController
 
   def index
     @book = Book.find_by(id: params[:book_id])
-    @borrowings = @book.borrowings.includes(:user)
+    @borrowings = authorize @book.borrowings.includes(:user)
   end
 
   def add
+    authorize @borrowing
+
     @book = Book.find_by(id: params[:id])
     @borrowables = @borrowing.borrowables
     borrowable = @borrowables.where(book_id: @book.id).first_or_initialize
-
 
     if borrowable.new_record?
       @book.decrement_copies!
@@ -70,6 +73,8 @@ class BorrowingsController < ApplicationController
   end
 
   def remove
+    authorize @borrowing
+
     borrowable = Borrowable.find_by(id: params[:id])
     @book = borrowable.book
     @book.increment_copies!
@@ -91,6 +96,8 @@ class BorrowingsController < ApplicationController
   end
 
   def checkout
+    authorize @borrowing
+
     @borrowing.set_due_date!
     session[:borrowing_id] = nil
 
