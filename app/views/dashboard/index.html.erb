@@ -46,7 +46,8 @@
                 </tbody>
         </table>
     </div>
-<% elsif member_signed_in? %>
+<% end %>
+<% if member_signed_in? %>
     <h1>Dashboard for Member </h1>
     <div>
         <% @member_borrowings.each do |borrowing| %>

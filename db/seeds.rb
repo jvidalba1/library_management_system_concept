@@ -7,6 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Borrowable.delete_all
+Book.delete_all
+Borrowing.delete_all
+User.delete_all
 
 
 librarian = Librarian.create!(email: "librarian1@sample.com", password: "librarian")
