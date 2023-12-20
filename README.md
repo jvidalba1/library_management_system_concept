@@ -1,4 +1,5 @@
 # README
+- In 'main' branch we can find the development until deadline date, in 'fixs' branch we can find some refactors and more features added.
 
 ## Notes
 - I chose to create 4 tables in the database, and 6 models in the Rails project, I used STI for users, librarians and members models. I chose to use a many-to-many relationship between Book and Borrowing with an intermediate model named Borrowable.
