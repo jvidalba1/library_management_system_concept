@@ -1,7 +1,11 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
-  before_action :init_borrowing_cart
+  before_action :authenticate_user!#, unless: :format_json?
+  before_action :init_borrowing_cart#, unless: :format_json?
+
+  # def format_json?
+  #   request.format.json?
+  # end
 
   def init_borrowing_cart
     if current_user.is_member?
@@ -16,6 +20,10 @@ class BooksController < ApplicationController
 
   def index
     @books = SearchBooks.new(Book.available).call(params[:search_value])
+
+    # respond_to do |format|
+    #     format.json { render :index }
+    # end
   end
 
   def show
