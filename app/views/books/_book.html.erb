@@ -8,7 +8,7 @@
     <td>
       <%= link_to "Edit", edit_book_path(book) %> |
       <%= link_to "Delete", book, data: { turbo_method: :delete } %> |
-      <%= link_to "See Borrowings", book_borrowings_path(book) %>
+      <%= link_to "See Borrowings", book_borrowings_path(book), data: { turbo: false } %>
     </td>
   <% end %>
   <% if member_signed_in? %>

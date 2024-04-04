@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # get 'borrowing', to: 'borrowing#show'
 
-
   resources :borrowings, only: [:show] do
     post 'return', on: :member
     collection do
@@ -29,7 +28,10 @@ Rails.application.routes.draw do
   devise_for :members
   devise_for :users
 
-  # namespace :dashboard do
-  #   root to: 'dashboard#index'
-  # end
+  #API
+  namespace :api do
+    namespace :v1 do
+      resources :books, only: [:index, :show, :create, :update, :destroy]
+    end
+  end
 end

@@ -8,12 +8,8 @@
 
 ## Pending tasks
 - Unit tests
-- Authorization under the hood, control actions by users librarian and member, I thought to use Pundit
-- Dont allow to select multiple times the same book and controle book copies when adding to borrowing cart
-- Refactoring controllers using object queries or services
-- Add more logic in Models
 - Refactoring views using more partials
-- Styling in views
+- Styling views
 - Restul API
 
 ## Getting started

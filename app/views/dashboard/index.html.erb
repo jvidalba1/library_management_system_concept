@@ -1,83 +1,99 @@
 <!-- TODO : Partials for each dashboard -->
 <% if librarian_signed_in? %>
     <h1>Dashboard for Librarian </h1>
-    <p>Total books: <%= @books.count %></p>
-    <p>Total borrowed books: <%= @borrowed_books.count %></p>
+    <p>Total books: <%= @librarian_dashboard[:total_books] %></p>
+    <p>Total borrowed books: <%= @librarian_dashboard[:borrowed_books].count %></p>
     <p></p>
-    <div>
-        <h3>Books due today</h3>
-        <table>
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>ISBN</th>
-                <th>Total copies</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% @books_due_today.each do |book| %>
-                <tr id="<%= dom_id book %>">
-                    <td><%= book.title %></td>
-                    <td><%= book.author %></td>
-                    <td><%= book.genre %></td>
-                    <td><%= book.isbn %></td>
-                    <td><%= book.total_copies %></td>
+    <% if @librarian_dashboard[:books_due_today].any? %>
+        <div>
+            <h3>Books due today</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>ISBN</th>
+                    <th>Total copies</th>
                 </tr>
-            <% end %>
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <h3>List users with overdue books</h3>
-        <table>
-            <thead>
-            <tr>
-                <th>Email</th>
-            </tr>
-            </thead>
+                </thead>
                 <tbody>
-                    <% @users.each do |user| %>
+                <% @librarian_dashboard[:books_due_today].each do |book| %>
+                    <tr id="<%= dom_id book %>">
+                        <td><%= book.title %></td>
+                        <td><%= book.author %></td>
+                        <td><%= book.genre %></td>
+                        <td><%= book.isbn %></td>
+                        <td><%= book.total_copies %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+    <% else %>
+        <div>
+            <p>No books due today</p>
+        </div>
+    <% end %>
+    <% if @librarian_dashboard[:users_overdue].any? %>
+        <div>
+            <h3>List users with overdue books</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @librarian_dashboard[:users_overdue].each do |user| %>
                         <tr>
                             <td><%= user.email %></td>
                         </tr>
                     <% end %>
                 </tbody>
-        </table>
-    </div>
-<% elsif member_signed_in? %>
-    <h1>Dashboard for Member </h1>
-    <div>
-        <% @member_borrowings.each do |borrowing| %>
-            <p>--------------------------------------------</p>
-            <p>Status: <%= borrowing.status %></p>
-            <p>Returned at: <%= borrowing.returned_at %></p>
-            <p>Borrowed at: <%= borrowing.borrowed_at %></p>
-            <p>Due at: <%= borrowing.due_at %></p>
-            <div>
-                <h3>Books:</h3>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Genre</th>
-                        <th>ISBN</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% borrowing.books.each do |book| %>
+            </table>
+        </div>
+    <% else %>
+        <div><p>No users with overdue books</p></div>
+    <% end %>
+<% end %>
+<% if member_signed_in? %>
+    <% if @member_dashboard[:user_borrowings].any? %>
+        <h1>Dashboard for Member </h1>
+        <h3>List of borrowings</h3>
+        <div>
+            <% @member_dashboard[:user_borrowings].each do |borrowing| %>
+                <p>--------------------------------------------</p>
+                <p>Status: <%= borrowing.status %></p>
+                <p>Returned at: <%= borrowing.returned_at %></p>
+                <p>Borrowed at: <%= borrowing.borrowed_at %></p>
+                <p>Due at: <%= borrowing.due_at %></p>
+                <div>
+                    <h3>Books:</h3>
+                    <table>
+                        <thead>
                         <tr>
-                            <td><%= book.title %></td>
-                            <td><%= book.author %></td>
-                            <td><%= book.genre %></td>
-                            <td><%= book.isbn %></td>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Genre</th>
+                            <th>ISBN</th>
                         </tr>
-                    <% end %>
-                    </tbody>
-                </table>
-            </div>
-        <% end %>
-    </div>
+                        </thead>
+                        <tbody>
+                        <% borrowing.books.each do |book| %>
+                            <tr>
+                                <td><%= book.title %></td>
+                                <td><%= book.author %></td>
+                                <td><%= book.genre %></td>
+                                <td><%= book.isbn %></td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            <% end %>
+        </div>
+    <% else %>
+        <p>No borrowings found</p>
+    <% end %>
 <% end %>

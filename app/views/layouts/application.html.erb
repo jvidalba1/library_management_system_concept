@@ -33,9 +33,10 @@
         <%= link_to 'Edit profile', edit_user_registration_path %>
     <% end %>
 
-    <p class="notice" style="color: orange"><%= notice %></p>
-    <p class="alert" style="color: red"><%= alert %></p>
-
+    <div class="flash">
+      <%= render "layouts/flash" %>
+    </div>
+    
     <%= yield %>
   </body>
 </html>
