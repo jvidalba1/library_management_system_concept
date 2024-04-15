@@ -32,6 +32,10 @@ class BorrowingsController < ApplicationController
     @borrowings = authorize @book.borrowings.includes(:user)
   end
 
+  #
+  # Testing turbo stream
+  # ToDo: Refactoring fat controllers
+  #
   def add
     authorize @borrowing
 
@@ -72,6 +76,10 @@ class BorrowingsController < ApplicationController
     end
   end
 
+  #
+  # Testing turbo stream
+  # ToDo: Refactoring fat controllers
+  #
   def remove
     authorize @borrowing
 
